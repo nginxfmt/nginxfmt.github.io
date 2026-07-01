@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-bg">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nginxfmt</title>
+    <meta name="description"
+        content="nginxfmt is a fast, lean command-line tool that formats nginx configuration files. Install via Homebrew, Cargo, package managers, or GitHub Releases — run in CI and keep your configs consistent." />
+    <meta name="theme-color" content="#0d1117" />
+
+    <meta property="og:title" content="nginxfmt — nginx config formatter" />
+    <meta property="og:description"
+        content="A fast, lean command-line tool that formats Nginx configuration files. Install via Homebrew, Cargo, package managers, or GitHub Releases — run in CI and keep your configs consistent." />
+    <meta property="og:type" content="website" />
+
+    <link rel="icon" type="image/png" href="/favicon-96x96.png?v=20260701" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260701" />
+    <link rel="shortcut icon" href="/favicon.ico?v=20260701" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260701" />
+    <meta name="apple-mobile-web-app-title" content="nginxfmt" />
+    <link rel="manifest" href="/site.webmanifest?v=20260701" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="#top" aria-label="nginxfmt home">
+                <span class="brand-name">nginxfmt</span>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav"
+                aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+                <a href="#install">Install</a>
+                <a href="#usage">Usage</a>
+                <a href="#config">Config</a>
+                <a href="#options">Options</a>
+                <a class="nav-cta" href="https://github.com/nginxfmt/nginxfmt" target="_blank" rel="noopener">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero" id="top">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">GPLv3 licensed</p>
+                    <h1 class="hero-title text-balance">Format your <span class="accent">Nginx</span> configs.</h1>
+                    <p class="hero-sub text-pretty">
+                        <strong>nginxfmt</strong> is a fast CLI tool that formats Nginx
+                        configuration files cleanly, consistently and predictably.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#install">Get started</a>
+                        <a class="btn btn-ghost" href="#usage">How to use</a>
+                    </div>
+
+                    <div class="hero-quickinstall">
+                        <span class="quickinstall-label">Quick install</span>
+                        <div class="code-inline" data-copy>
+                            <code>cargo install nginxfmt</code>
+                            <button class="copy-btn" type="button" aria-label="Copy install command">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Before / After demo -->
+                <div class="hero-demo" aria-hidden="false">
+                    <div class="terminal">
+                        <div class="terminal-bar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="terminal-title">nginx.conf</span>
+                        </div>
+                        <div class="terminal-tabs" role="tablist" aria-label="Before and after formatting">
+                            <button class="term-tab is-active" role="tab" aria-selected="true"
+                                data-tab="before">Before</button>
+                            <button class="term-tab" role="tab" aria-selected="false" data-tab="after">After</button>
+                        </div>
+                        <pre class="terminal-body is-active" data-panel="before"><code>server{
+listen 80;
+    server_name example.com;
+location / {
+proxy_pass http://backend;
+      proxy_set_header Host $host;
+}
+
+
+
+}</code></pre>
+                        <pre class="terminal-body" data-panel="after"><code>server {
+    listen 80;
+    server_name example.com;
+
+    location / {
+        proxy_pass http://backend;
+        proxy_set_header Host $host;
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features" aria-label="Features">
+            <div class="container feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">⚡</div>
+                    <h3>Fast</h3>
+                    <p>Written in Rust. Formats large configs in milliseconds.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">✓</div>
+                    <h3>CI-friendly</h3>
+                    <p>Use <code>--check</code> to fail the build when a config is not well-formatted.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">⚙</div>
+                    <h3>Configurable</h3>
+                    <p>You can set tabs/spaces indentation, brace style, blank-line collapsing and more</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">🅛</div>
+                    <h3>Lua-aware</h3>
+                    <p><code>*_by_lua_block</code> bodies are preserved as-is.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Install -->
+        <section class="section" id="install">
+            <div class="container">
+                <div class="install-layout">
+                    <div class="install-meta">
+                        <div class="section-head">
+                            <h2>Install</h2>
+                            <p class="section-sub">Binaries and packages ship for Linux, macOS, and Windows on
+                                <code>amd64</code>, <code>i386</code>, <code>arm64</code>, and <code>armhf</code>. Every
+                                tagged
+                                release publishes archives and platform packages to
+                                <a href="https://github.com/nginxfmt/nginxfmt/releases" target="_blank"
+                                    rel="noopener">GitHub Releases</a>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="install-panels">
+                        <div class="install-switcher">
+                            <label class="install-label" for="installMethod">Installation method</label>
+                            <div class="install-select-wrap">
+                                <select id="installMethod" class="install-select">
+                                    <optgroup label="All platforms">
+                                        <option value="releases" selected>GitHub Releases</option>
+                                        <option value="cargo">Cargo</option>
+                                    </optgroup>
+                                    <optgroup label="macOS / Linux">
+                                        <option value="homebrew">Homebrew</option>
+                                    </optgroup>
+                                    <optgroup label="Linux">
+                                        <option value="deb">Debian / Ubuntu (.deb)</option>
+                                        <option value="linux-packages">Fedora / Alpine / Arch packages</option>
+                                        <option value="aur">Arch Linux (AUR)</option>
+                                    </optgroup>
+                                    <optgroup label="Windows">
+                                        <option value="scoop">Scoop</option>
+                                        <option value="winget">Winget</option>
+                                        <option value="chocolatey">Chocolatey</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <article class="panel install-panel is-active" data-install="releases">
+                            <h3 class="panel-title">GitHub Releases <span class="tag">all platforms</span></h3>
+                            <p class="panel-lead">Download the archive for your OS and architecture from the
+                                <a href="https://github.com/nginxfmt/nginxfmt/releases" target="_blank"
+                                    rel="noopener">latest release</a>, extract it, and place <code>nginxfmt</code> on
+                                your
+                                <code>PATH</code>.
+                            </p>
+                        </article>
+
+                        <article class="panel install-panel" data-install="homebrew" hidden>
+                            <h3 class="panel-title">Homebrew <span class="tag">macOS / Linux</span></h3>
+                            <div class="code-block" data-copy>
+                                <button class="copy-btn" type="button"
+                                    aria-label="Copy Homebrew install commands">Copy</button>
+                                <pre><code>brew tap nginxfmt/homebrew-tap
+brew install --cask nginxfmt</code></pre>
+                            </div>
+                        </article>
+
+                        <article class="panel install-panel" data-install="cargo" hidden>
+                            <h3 class="panel-title">Cargo <span class="tag">Rust</span></h3>
+                            <div class="code-block" data-copy>
+                                <button class="copy-btn" type="button"
+                                    aria-label="Copy Cargo install command">Copy</button>
+                                <pre><code>cargo install nginxfmt</code></pre>
+                            </div>
+                            <p class="panel-note">Published to <a href="https://crates.io/crates/nginxfmt"
+                                    target="_blank" rel="noopener">crates.io</a> on each release. Requires a Rust
+                                toolchain — grab one at
+                                <a href="https://rustup.rs" target="_blank" rel="noopener">rustup.rs</a>.
+                            </p>
+                        </article>
+
+                        <article class="panel install-panel" data-install="deb" hidden>
+                            <h3 class="panel-title">Debian / Ubuntu <span class="tag">.deb</span></h3>
+                            <div class="code-block" data-copy>
+                                <button class="copy-btn" type="button"
+                                    aria-label="Copy Debian install command">Copy</button>
+                                <pre><code>sudo dpkg -i nginxfmt_*_amd64.deb</code></pre>
+                            </div>
+                            <p class="panel-note">Download the <code>.deb</code> for your architecture from the
+                                <a href="https://github.com/nginxfmt/nginxfmt/releases" target="_blank"
+                                    rel="noopener">latest release</a>.
+                            </p>
+                        </article>
+
+                        <article class="panel install-panel" data-install="linux-packages" hidden>
+                            <h3 class="panel-title">Linux packages <span class="tag">Fedora / Alpine / Arch</span></h3>
+                            <p class="panel-lead"><code>.rpm</code>, <code>.apk</code>, and Arch Linux packages are
+                                attached
+                                to each <a href="https://github.com/nginxfmt/nginxfmt/releases" target="_blank"
+                                    rel="noopener">GitHub release</a>.</p>
+                        </article>
+
+                        <article class="panel install-panel" data-install="aur" hidden>
+                            <h3 class="panel-title">Arch Linux <span class="tag">AUR</span></h3>
+                            <div class="code-block" data-copy>
+                                <button class="copy-btn" type="button"
+                                    aria-label="Copy AUR install command">Copy</button>
+                                <pre><code>yay -S nginxfmt-bin</code></pre>
+                            </div>
+                        </article>
+
+                        <article class="panel install-panel" data-install="scoop" hidden>
+                            <h3 class="panel-title">Scoop <span class="tag">Windows</span></h3>
+                            <div class="code-block" data-copy>
+                                <button class="copy-btn" type="button"
+                                    aria-label="Copy Scoop install commands">Copy</button>
+                                <pre><code>scoop bucket add nginxfmt https://github.com/nginxfmt/scoop-bucket
+scoop install nginxfmt</code></pre>
+                            </div>
+                        </article>
+
+                        <article class="panel install-panel" data-install="winget" hidden>
+                            <h3 class="panel-title">Winget <span class="tag">Windows</span></h3>
+                            <div class="code-block" data-copy>
+                                <button class="copy-btn" type="button"
+                                    aria-label="Copy Winget install command">Copy</button>
+                                <pre><code>winget install nginxfmt.nginxfmt</code></pre>
+                            </div>
+                            <p class="panel-note">Manifests are published to
+                                <a href="https://github.com/nginxfmt/winget" target="_blank"
+                                    rel="noopener">nginxfmt/winget</a>
+                                on each release.
+                            </p>
+                        </article>
+
+                        <article class="panel install-panel" data-install="chocolatey" hidden>
+                            <h3 class="panel-title">Chocolatey <span class="tag">Windows</span></h3>
+                            <div class="code-block" data-copy>
+                                <button class="copy-btn" type="button"
+                                    aria-label="Copy Chocolatey install command">Copy</button>
+                                <pre><code>choco install nginxfmt</code></pre>
+                            </div>
+                            <p class="panel-note"><code>.nupkg</code> files are also attached to
+                                <a href="https://github.com/nginxfmt/nginxfmt/releases" target="_blank"
+                                    rel="noopener">GitHub Releases</a>.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage -->
+        <section class="section section-alt" id="usage">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Usage</h2>
+                    <p class="section-sub">Point it at a file. By default it formats and prints to stdout.</p>
+                </div>
+
+                <div class="usage-grid">
+                    <div class="usage-item">
+                        <h4>Format &amp; print to stdout</h4>
+                        <div class="code-block" data-copy>
+                            <button class="copy-btn" type="button" aria-label="Copy command">Copy</button>
+                            <pre><code>nginxfmt conf/nginx.conf</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="usage-item">
+                        <h4>Format in place</h4>
+                        <div class="code-block" data-copy>
+                            <button class="copy-btn" type="button" aria-label="Copy command">Copy</button>
+                            <pre><code>nginxfmt --write conf/nginx.conf</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="usage-item">
+                        <h4>Check formatting (CI)</h4>
+                        <div class="code-block" data-copy>
+                            <button class="copy-btn" type="button" aria-label="Copy command">Copy</button>
+                            <pre><code>nginxfmt --check conf/nginx.conf</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="usage-item">
+                        <h4>Read from stdin (unix)</h4>
+                        <div class="code-block" data-copy>
+                            <button class="copy-btn" type="button" aria-label="Copy command">Copy</button>
+                            <pre><code>cat conf/nginx.conf | nginxfmt -</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Config -->
+        <section class="section" id="config">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Configuration</h2>
+                    <p class="section-sub">
+                        Drop a <code>.nginxfmt.toml</code> in your project. It's auto-discovered by
+                        walking up from the input file. CLI flags override file values.
+                    </p>
+                </div>
+
+                <div class="config-grid">
+                    <article class="panel">
+                        <h3 class="panel-title">.nginxfmt.toml</h3>
+                        <div class="code-block" data-copy>
+                            <button class="copy-btn" type="button" aria-label="Copy config">Copy</button>
+                            <pre><code>indent_style = "spaces"   # or "tabs"
+indent_width = 4
+brace_style = "same_line" # or "next_line"
+max_blank_lines = 1
+trailing_newline = true
+preserve_inline_comments = true</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <h3 class="panel-title">Override with flags</h3>
+                        <div class="code-block" data-copy>
+                            <button class="copy-btn" type="button" aria-label="Copy command">Copy</button>
+                            <pre><code>nginxfmt \
+  --tabs \
+  --indent-width 2 \
+  --brace-style next_line \
+  conf/nginx.conf</code></pre>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Options -->
+        <section class="section section-alt" id="options">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Options</h2>
+                    <p class="section-sub">Every flag, and what it defaults to.</p>
+                </div>
+
+                <div class="table-wrap">
+                    <table class="options-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Option</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Default</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--write</code>, <code>-w</code></td>
+                                <td>Write formatted output back to the file</td>
+                                <td><span class="default-pill">stdout</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--check</code></td>
+                                <td>Exit 1 if input is not formatted</td>
+                                <td><span class="default-pill">off</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--config PATH</code></td>
+                                <td>Explicit config file path</td>
+                                <td><span class="default-pill">auto-discover</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--tabs</code> / <code>--spaces</code></td>
+                                <td>Indentation style</td>
+                                <td><span class="default-pill">spaces</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--indent-width N</code></td>
+                                <td>Spaces per indent level</td>
+                                <td><span class="default-pill">4</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--brace-style</code></td>
+                                <td><code>same_line</code> or <code>next_line</code></td>
+                                <td><span class="default-pill">same_line</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--max-blank-lines N</code></td>
+                                <td>Collapse extra blank lines</td>
+                                <td><span class="default-pill">1</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--trailing-newline</code></td>
+                                <td>Ensure trailing newline</td>
+                                <td><span class="default-pill">true</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--preserve-inline-comments</code></td>
+                                <td>Keep <code>#</code> comments on same line</td>
+                                <td><span class="default-pill">true</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+                    <!-- Background -->
+                    <rect width="64" height="64" rx="12" fill="#0f1b2d"/>
+                  
+                    <!-- Config lines (indented code lines, subtle blue-grey) -->
+                    <rect x="10" y="18" width="20" height="3" rx="1.5" fill="#3a5a7a" opacity="0.7"/>
+                    <rect x="14" y="24" width="16" height="3" rx="1.5" fill="#3a5a7a" opacity="0.7"/>
+                    <rect x="14" y="30" width="16" height="3" rx="1.5" fill="#3a5a7a" opacity="0.7"/>
+                    <rect x="10" y="36" width="20" height="3" rx="1.5" fill="#3a5a7a" opacity="0.7"/>
+                  
+                    <!-- Stylized "N" lettermark in bright green -->
+                    <path d="M 22 14 L 22 50 L 27 50 L 27 26 L 37 50 L 42 50 L 42 14 L 37 14 L 37 38 L 27 14 Z"
+                          fill="#00d4aa"/>
+                  </svg>
+                <span>nginxfmt</span>
+            </div>
+            <nav class="footer-links" aria-label="Footer">
+                <a href="https://github.com/nginxfmt/nginxfmt" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://crates.io/crates/nginxfmt" target="_blank" rel="noopener">crates.io</a>
+                <a href="#install">Install</a>
+                <a href="#options">Options</a>
+            </nav>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">Copied to clipboard</div>
+
+    <script src="/main.js" defer></script>
+</body>
+
+</html>
