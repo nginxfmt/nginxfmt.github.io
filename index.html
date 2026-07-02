@@ -4,15 +4,83 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>nginxfmt</title>
+    <title>nginxfmt | A Nginx configuration files formatter</title>
     <meta name="description"
-        content="nginxfmt is a fast, lean command-line tool that formats nginx configuration files. Install via Homebrew, Cargo, package managers, or GitHub Releases — run in CI and keep your configs consistent." />
+        content="nginxfmt is a fast, lean command-line tool that formats Nginx configuration files. Install via Homebrew, Cargo, package managers, or GitHub Releases — run in CI and keep your configs consistent." />
+    <meta name="application-name" content="nginxfmt" />
+    <meta name="author" content="nginxfmt contributors" />
+    <meta name="keywords"
+        content="nginxfmt, nginx, nginx formatter, nginx config, nginx configuration, formatter, cli, rust, pretty print, ci" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
     <meta name="theme-color" content="#0d1117" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="canonical" href="https://nginxfmt.github.io/" />
+    <link rel="alternate" hreflang="en" href="https://nginxfmt.github.io/" />
+    <link rel="alternate" hreflang="x-default" href="https://nginxfmt.github.io/" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 
-    <meta property="og:title" content="nginxfmt — nginx config formatter" />
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="nginxfmt" />
+    <meta property="og:title" content="nginxfmt | A Nginx configuration files formatter" />
     <meta property="og:description"
         content="A fast, lean command-line tool that formats Nginx configuration files. Install via Homebrew, Cargo, package managers, or GitHub Releases — run in CI and keep your configs consistent." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nginxfmt.github.io/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://nginxfmt.github.io/web-app-manifest-512x512.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="nginxfmt logo | A Nginx configuration files formatter" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="nginxfmt | A Nginx configuration files formatter" />
+    <meta name="twitter:description"
+        content="A fast, lean command-line tool that formats Nginx configuration files. Install via Homebrew, Cargo, package managers, or GitHub Releases." />
+    <meta name="twitter:image" content="https://nginxfmt.github.io/web-app-manifest-512x512.png" />
+    <meta name="twitter:image:alt" content="nginxfmt logo | A Nginx configuration files formatter" />
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://nginxfmt.github.io/#website",
+                "url": "https://nginxfmt.github.io/",
+                "name": "nginxfmt",
+                "description": "A fast, lean command-line tool that formats Nginx configuration files.",
+                "inLanguage": "en-US"
+            },
+            {
+                "@type": "SoftwareApplication",
+                "@id": "https://nginxfmt.github.io/#software",
+                "name": "nginxfmt",
+                "url": "https://nginxfmt.github.io/",
+                "applicationCategory": "DeveloperApplication",
+                "applicationSubCategory": "Code formatter",
+                "operatingSystem": "Linux, macOS, Windows",
+                "description": "A fast, lean command-line tool that formats Nginx configuration files cleanly, consistently and predictably.",
+                "softwareHelp": "https://nginxfmt.github.io/#usage",
+                "downloadUrl": "https://github.com/nginxfmt/nginxfmt/releases",
+                "codeRepository": "https://github.com/nginxfmt/nginxfmt",
+                "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                "author": {
+                    "@type": "Organization",
+                    "name": "nginxfmt",
+                    "url": "https://github.com/nginxfmt"
+                }
+            }
+        ]
+    }
+    </script>
 
     <link rel="icon" type="image/png" href="/favicon-96x96.png?v=20260701" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260701" />
@@ -88,12 +156,15 @@
                             <span class="dot dot-green"></span>
                             <span class="terminal-title">nginx.conf</span>
                         </div>
-                        <div class="terminal-tabs" role="tablist" aria-label="Before and after formatting">
-                            <button class="term-tab is-active" role="tab" aria-selected="true"
-                                data-tab="before">Before</button>
-                            <button class="term-tab" role="tab" aria-selected="false" data-tab="after">After</button>
+                        <div class="terminal-tabs" role="tablist" aria-label="Input and formatted output">
+                            <button class="term-tab is-active" role="tab" aria-selected="true" aria-controls="playInputPanel"
+                                data-tab="input">Input</button>
+                            <button class="term-tab" role="tab" aria-selected="false" aria-controls="playOutputPanel"
+                                data-tab="output">Output</button>
                         </div>
-                        <pre class="terminal-body is-active" data-panel="before"><code>server{
+                        <div class="terminal-panel is-active" data-panel="input" id="playInputPanel" role="tabpanel">
+                            <textarea id="playInput" class="terminal-body terminal-input" spellcheck="false"
+                                aria-label="Nginx configuration input">server{
 listen 80;
     server_name example.com;
 location / {
@@ -103,16 +174,42 @@ proxy_pass http://backend;
 
 
 
-}</code></pre>
-                        <pre class="terminal-body" data-panel="after"><code>server {
-    listen 80;
-    server_name example.com;
-
-    location / {
-        proxy_pass http://backend;
-        proxy_set_header Host $host;
-    }
-}</code></pre>
+}</textarea>
+                        </div>
+                        <div class="terminal-panel" data-panel="output" id="playOutputPanel" role="tabpanel" hidden>
+                            <pre class="terminal-body terminal-output"><code id="playOutput"></code></pre>
+                            <p class="play-error" id="playError" hidden></p>
+                        </div>
+                        <div class="play-options" aria-label="Formatting options">
+                            <label class="play-option">
+                                <span class="play-option-label">Indent</span>
+                                <select id="playIndentStyle" class="play-control">
+                                    <option value="spaces" selected>Spaces</option>
+                                    <option value="tabs">Tabs</option>
+                                </select>
+                            </label>
+                            <label class="play-option">
+                                <span class="play-option-label">Width</span>
+                                <input id="playIndentWidth" class="play-control" type="number" min="1" max="8"
+                                    value="4" />
+                            </label>
+                            <label class="play-option">
+                                <span class="play-option-label">Braces</span>
+                                <select id="playBraceStyle" class="play-control">
+                                    <option value="same_line" selected>Same line</option>
+                                    <option value="next_line">Next line</option>
+                                </select>
+                            </label>
+                            <label class="play-option">
+                                <span class="play-option-label">Blank lines</span>
+                                <input id="playMaxBlankLines" class="play-control" type="number" min="0" max="5"
+                                    value="1" />
+                            </label>
+                            <label class="play-option play-option-check">
+                                <input id="playPreserveComments" type="checkbox" checked />
+                                <span>Inline comments</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -151,10 +248,9 @@ proxy_pass http://backend;
                     <div class="install-meta">
                         <div class="section-head">
                             <h2>Install</h2>
-                            <p class="section-sub">Binaries and packages ship for Linux, macOS, and Windows on
-                                <code>amd64</code>, <code>i386</code>, <code>arm64</code>, and <code>armhf</code>. Every
-                                tagged
-                                release publishes archives and platform packages to
+                            <p class="section-sub">Binaries and packages ship for Linux, macOS, and Windows on a variety
+                                of architectures. Every
+                                tagged release publishes archives and platform packages to
                                 <a href="https://github.com/nginxfmt/nginxfmt/releases" target="_blank"
                                     rel="noopener">GitHub Releases</a>.
                             </p>
@@ -462,6 +558,7 @@ preserve_inline_comments = true</code></pre>
     <div class="toast" id="toast" role="status" aria-live="polite">Copied to clipboard</div>
 
     <script src="/main.js" defer></script>
+    <script type="module" src="/playground.js" defer></script>
 </body>
 
 </html>

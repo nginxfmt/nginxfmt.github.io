@@ -1,6 +1,10 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "nginxfmt — Nginx config formatter",
+  "short_name": "nginxfmt",
+  "description": "A fast CLI tool that formats Nginx configuration files cleanly, consistently and predictably.",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "en",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png?v=20260701",
@@ -15,7 +19,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#0d1117",
+  "background_color": "#0d1117",
   "display": "standalone"
 }

@@ -20,9 +20,9 @@
         });
     }
 
-    /* ---------- Terminal before/after tabs ---------- */
+    /* ---------- Terminal input/output tabs ---------- */
     var tabs = document.querySelectorAll(".term-tab");
-    var panels = document.querySelectorAll(".terminal-body");
+    var panels = document.querySelectorAll(".terminal-panel");
 
     tabs.forEach(function (tab) {
         tab.addEventListener("click", function () {
@@ -35,10 +35,9 @@
             });
 
             panels.forEach(function (panel) {
-                panel.classList.toggle(
-                    "is-active",
-                    panel.getAttribute("data-panel") === target
-                );
+                var active = panel.getAttribute("data-panel") === target;
+                panel.classList.toggle("is-active", active);
+                panel.hidden = !active;
             });
         });
     });
