@@ -920,14 +920,10 @@ pre {
     white-space: nowrap;
 }
 
-.default-pill {
+.config-default {
     font-family: var(--font-mono);
     font-size: 0.78rem;
     color: var(--fg-muted);
-    background: var(--panel-2);
-    border: 1px solid var(--border);
-    padding: 2px 9px;
-    border-radius: 999px;
     white-space: nowrap;
 }
 
